@@ -8,7 +8,6 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Dataset Description
 
@@ -60,5 +59,3 @@ For fine-tuning, run the Jupyter notebook found in the `fine-tune` directory:
 ## Contributing
 
 - <m.gh@linuxmail.org>
-
-## License
