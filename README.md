@@ -1,7 +1,5 @@
 # PalestineLLM
 
-## Overview
-
 **PalestineLLM** is a **Pro-Palestine** project designed to facilitate the understanding and exploration of issues related to Palestine through the use of language models. This repository includes various datasets, text documents, and tools for training language models to improve their performance on Palestinian topics.
 
 ## Table of Contents
