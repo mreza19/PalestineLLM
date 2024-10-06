@@ -1,24 +1,24 @@
 const fs = require('fs');
 const path = require('path');
 
-const resultFile = './concatenated_qr.jsonl';
+const resultFile = './output/concatenated_qa.jsonl';
 fs.writeFileSync(resultFile, '');
 
-function findAndConcatQRJSONL(directory) {
+function findAndConcatQAJSONL(directory) {
     const files = fs.readdirSync(directory);
 
     files.forEach(file => {
         const filePath = path.join(directory, file);
 
         if (fs.statSync(filePath).isDirectory()) {
-            findAndConcatQRJSONL(filePath);
-        } else if (file === 'qr.jsonl') {
-            concatQRJSONL(filePath);
+            findAndConcatQAJSONL(filePath);
+        } else if (file === 'QA.jsonl') {
+            concatQAJSONL(filePath);
         }
     });
 }
 
-function concatQRJSONL(filePath) {
+function concatQAJSONL(filePath) {
     const data = fs.readFileSync(filePath, 'utf8').trim();
     const lines = data.split('\n').filter(line => line.trim() !== ''); // Filter empty lines
 
@@ -59,5 +59,5 @@ function concatQRJSONL(filePath) {
 
 const startingDirectory = './';
 
-findAndConcatQRJSONL(startingDirectory);
+findAndConcatQAJSONL(startingDirectory);
 fs.writeFileSync(resultFile, fs.readFileSync(resultFile, 'utf8').replace(/\n$/, ''));
