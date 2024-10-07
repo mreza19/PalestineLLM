@@ -60,7 +60,7 @@ For fine-tuning, run the Jupyter notebook found in the `fine-tune` directory:
 
 We encourage contributions from the community to make **PalestineLLM** even more impactful. Here's how you can help:
 
-- **Share Your OpenAI o1 Data**: If you have access to `OpenAI's O1` or other cutting-edge models, you can help by generating high-quality question-answer pairs (QAs) related to **Palestinian** topics and contributing them to this repository. Simply copy `.prompt` file contents and paste it into your AI tool. It will generate a JSON lines of high quality data.
+- **Share Your OpenAI O1 Data**: If you have access to `OpenAI's O1` or other cutting-edge models, you can help by generating high-quality question-answer pairs (QAs) related to **Palestinian** topics and contributing them to this repository. Simply copy `.prompt` file contents and paste it into your AI tool. It will generate a JSON lines of high quality data.
 
 - **Create and Share Custom GPTs**: Consider building **custom GPT models** focused on **Palestinian** issues using **OpenAI's tools**. You can share these models in the OpenAI Marketplace and share them with the community to expand the availability of specialized LLMs.
 
