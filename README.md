@@ -13,7 +13,7 @@
 
 The project includes various text documents and structured data related to Palestinian topics. The datasets are organized into different directories, such as:
 
-- **content**: Contains text documents and QA pairs organized by sources.
+- **datasets**: Contains text documents and QA pairs organized by sources.
 - **fine-tune**: Includes materials for fine-tuning the language model.
 
 ### Key Files

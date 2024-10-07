@@ -39,6 +39,6 @@ function concatPrompt(partFilePath) {
 }
 
 // Starting directory for processing
-const startingDirectory = './content';
+const startingDirectory = './datasets';
 
 findAndConcatPrompt(startingDirectory);
