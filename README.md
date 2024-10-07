@@ -33,17 +33,15 @@ To set up the project, follow these steps:
    ```
 
 2. **Run Ollama_Unsloth on Google colab**
-3. **Download The Model**
+3. **Download, Share The Model**
 
 ## Usage
-
-The project includes scripts for concatenating QA pairs and running fine-tuning processes. You can execute the `qa_concater.js` script to gather QA data:
 
 ```bash
 node qa_contacter.js
 ```
 
-This script will create a consolidated file (`concatenated_qa.jsonl`) in the fine-tune directory.
+This script will create a consolidated file (`final_QA_dataset.jsonl`) in the `fine-tune` directory.
 
 For fine-tuning, run the Jupyter notebook found in the `fine-tune` directory:
 

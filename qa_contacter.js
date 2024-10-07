@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const resultFile = './fine-tune/concatenated_qa.jsonl';
+const resultFile = './fine-tune/final_QA_dataset.jsonl';
 fs.writeFileSync(resultFile, '');
 
 function findAndConcatQAJSONL(directory) {
