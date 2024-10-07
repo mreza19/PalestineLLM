@@ -4,20 +4,19 @@
 
 ## Table of Contents
 
-- [Dataset Description](#dataset-description)
+- [Dataset](#dataset)
 - [Installation](#installation)
 - [Usage](#usage)
 - [How You Can Help](#how-you-can-help)
 
-## Dataset Description
+## Dataset
 
-The project includes various text documents and structured data related to Palestinian topics. The datasets are organized into different directories, such as:
+The project includes various text documents and structured data related to Palestinian topics. The datasets are organized into different directories, such as [decolonizepalestine](https://decolonizepalestine.com/)
+
+### Key File And Folders
 
 - **datasets**: Contains text documents and QA pairs organized by sources.
 - **fine-tune**: Includes materials for fine-tuning the language model.
-
-### Key Files
-
 - **concatenated_qr.jsonl**: A JSON Lines file that consolidates question-answer pairs.
 - **prompt_generator.js**: Script for generating prompts.
 - **QA.jsonl**: Structured QA pairs extracted from various sources for training and evaluation purposes.
