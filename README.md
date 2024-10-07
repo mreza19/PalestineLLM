@@ -11,14 +11,14 @@
 
 ## Dataset
 
-The project includes various text documents and structured data related to Palestinian topics. The datasets are organized into different directories, such as [decolonizepalestine](https://decolonizepalestine.com/)
+The project includes various text documents and structured data related to Palestinian topics. The datasets are organized into different directories, such as [decolonizepalestine](https://decolonizepalestine.com/).
 
-### Key File And Folders
+### Key Files and Folders
 
-- **datasets**: Contains text documents and QA pairs organized by sources.
+- **datasets**: Contains text documents and QA pairs organized by source.
 - **fine-tune**: Includes materials for fine-tuning the language model.
 - **concatenated_qr.jsonl**: A JSON Lines file that consolidates question-answer pairs.
-- **prompt_generator.js**: Script for generating prompts.
+- **prompt_generator.js**: A script for generating prompts.
 - **QA.jsonl**: Structured QA pairs extracted from various sources for training and evaluation purposes.
 
 ## Installation
@@ -32,8 +32,8 @@ To set up the project, follow these steps:
    cd PalestineLLM
    ```
 
-2. **Run Ollama_Unsloth on Google colab**
-3. **Download, Share The Model**
+2. **Run Ollama_Unsloth on Google Colab**.
+3. **Download and Share the Model**.
 
 ## Usage
 
@@ -43,7 +43,7 @@ node qa_contacter.js
 
 This script will create a consolidated file (`final_QA_dataset.jsonl`) in the `fine-tune` directory.
 
-For fine-tuning, run the Jupyter notebook found in the `fine-tune` directory:
+For fine-tuning, run the Jupyter notebook located in the `fine-tune` directory:
 
 1. Open the notebook using Jupyter:
 
@@ -57,12 +57,12 @@ For fine-tuning, run the Jupyter notebook found in the `fine-tune` directory:
 
 We encourage contributions from the community to make **PalestineLLM** even more impactful. Here's how you can help:
 
-- **Share Your OpenAI O1 Data**: If you have access to `OpenAI's O1` or other cutting-edge models, you can help by generating high-quality question-answer pairs (QAs) related to **Palestinian** topics and contributing them to this repository. Simply copy `.prompt` file contents and paste it into your AI tool. It will generate a JSON lines of high quality data.
+- **Share Your OpenAI O1 Data**: If you have access to `OpenAI's O1` or other cutting-edge models, you can help by generating high-quality question-answer pairs (QAs) related to **Palestinian** topics and contributing them to this repository. Simply copy the `.prompt` file contents and paste them into your AI tool. It will generate JSON lines of high-quality data.
 
-- **Create and Share Custom GPTs**: Consider building **custom GPT models** focused on **Palestinian** issues using **OpenAI's tools**. You can share these models in the OpenAI Marketplace and share them with the community to expand the availability of specialized LLMs.
+- **Create and Share Custom GPTs**: Consider building **custom GPT models** focused on **Palestinian** issues using **OpenAI's tools**. You can share these models in the OpenAI Marketplace and with the community to expand the availability of specialized LLMs.
 
-- **Fine-tune and Share PalestineLLM**: You can help improve **PalestineLLM** by fine-tuning it on additional datasets, especially those related to **Palestine**. Once fine-tuned, feel free to share your model on huggingFace or other platforms to make it accessible to others.
+- **Fine-tune and Share PalestineLLM**: You can help improve **PalestineLLM** by fine-tuning it on additional datasets, especially those related to **Palestine**. Also, you can work on better models as I was only able to fine-tune on Llama 3.1 7B. Once fine-tuned, feel free to share your model on HuggingFace or other platforms to make it accessible to others.
 
-- **Staring this repository and sharing it with others**: By starring this repository, you can help spread the word about this project and encourage others to contribute and use it.
+- **Star this Repository and Share It**: By starring this repository, you can help spread the word about this project and encourage others to contribute and use it.
 
 - **Machine Learning and AI Research**: If you are a researcher or student working on machine learning or AI projects, share your ideas and help make **PalestineLLM** better.
