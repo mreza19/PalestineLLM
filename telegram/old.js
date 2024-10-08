@@ -18,7 +18,7 @@ const rl = readline.createInterface({
 });
 
 (async () => {
-	const chat = new OllamaChat();
+	const chat = new OllamaChat('http://127.0.0.1:11434', 'llama3.1:8b');
 	console.log("Loading interactive example...");
 	const client = new TelegramClient(stringSession, apiId, apiHash, {
 		connectionRetries: 5,
