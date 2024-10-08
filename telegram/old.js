@@ -58,7 +58,7 @@ const rl = readline.createInterface({
 				const response = await chat.chatWithModel(userMessage);  // Send the user's message to the model
 								
 				// Send the response back to the user
-				await client.sendMessage(eventt.message.peerId.userId.value, { message: response });
+				await client.sendMessage(eventt.message.message.peerId.userId.value, { message: response });
 			}
 		}
 	client.addEventHandler(handler, new NewMessage({}));
