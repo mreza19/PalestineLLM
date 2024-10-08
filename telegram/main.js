@@ -4,13 +4,18 @@ import readline from "readline";
 import dotenv from "dotenv";
 import { NewMessage } from "telegram/events/index.js";
 import { NewMessageEvent } from "telegram/events/index.js";
-import OllamaChat from "../ollama/main.js"; // Ensure the path is correct
+import OllamaChat from "../ollama/main.js";
 
 dotenv.config();
 
 const apiId = +process.env.APP_ID;
 const apiHash = process.env.APP_HASH;
 const stringSession = new StringSession(process.env.SESSION); // fill this later with the value from session.save()
+
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout,
+});
 
 (async () => {
 	const chat = new OllamaChat();

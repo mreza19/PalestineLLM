@@ -57,8 +57,6 @@ module.exports = class OllamaChat {
 
     // Send the message and print the model's response
     const response = await this.sendMessage();
-    if (response) {
-      console.log(response.content);
-    }
+    return response
   }
 }
