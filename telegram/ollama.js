@@ -1,6 +1,6 @@
-const {Ollama} = require('ollama');
+import { Ollama } from 'ollama';
 
-module.exports = class OllamaChat {
+export default class OllamaChat {
   constructor(host = 'http://127.0.0.1:11434', model = 'llama3.1:8b') {
     this.ollama = new Ollama({ host });
     this.model = model;
@@ -55,8 +55,8 @@ module.exports = class OllamaChat {
       this.addUserMessage(content);
     }
 
-    // Send the message and print the model's response
+    // Send the message and return the model's response
     const response = await this.sendMessage();
-    return response
+    return response;
   }
 }

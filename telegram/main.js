@@ -4,7 +4,7 @@ import readline from "readline";
 import dotenv from "dotenv";
 import { NewMessage } from "telegram/events/index.js";
 import { NewMessageEvent } from "telegram/events/index.js";
-import OllamaChat from "../ollama/main.js";
+import OllamaChat from "./ollama.js";
 
 dotenv.config();
 
