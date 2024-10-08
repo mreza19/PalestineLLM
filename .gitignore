@@ -1,6 +1,5 @@
 secrets.json
 tmp/
-package-lock.json
 .env
 **/node_modules
 /.cloud/
