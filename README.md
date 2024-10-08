@@ -28,7 +28,7 @@ To set up the project, follow these steps:
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/yourusername/PalestineLLM.git
+   git clone https://github.com/mlibre/PalestineLLM.git
    cd PalestineLLM
    ```
 

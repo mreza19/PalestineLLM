@@ -8,8 +8,8 @@ import OllamaChat from "./ollama.js";
 
 dotenv.config();
 
-const chat = new OllamaChat('http://127.0.0.1:11434', 'unsloth_model');
-chat.setSystemMessage("you should only answer using emjies and nothing else");
+const chat = new OllamaChat(process.env.HOST || 'http://127.0.0.1:11434', process.env.MODEL || 'unsloth_model');
+chat.setSystemMessage(process.env.SYSTEM_MESSAGE || "");
 
 
 const apiId = +process.env.APP_ID;
