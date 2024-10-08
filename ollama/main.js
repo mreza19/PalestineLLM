@@ -7,13 +7,10 @@ module.exports = class OllamaChat {
     this.messages = [];
   }
 
-  // Set or update the system message at any time
   setSystemMessage(systemMessage) {
     if (this.messages.length > 0 && this.messages[0].role === 'system') {
-      // If the first message is already a system message, update its content
       this.messages[0].content = systemMessage;
     } else {
-      // If no system message exists, insert it at the start of the messages array
       this.messages.unshift({ role: 'system', content: systemMessage });
     }
   }
