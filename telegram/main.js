@@ -8,6 +8,10 @@ import OllamaChat from "../ollama/main.js";
 
 dotenv.config();
 
+const chat = new OllamaChat('http://127.0.0.1:11434', 'llama3.1:8b');
+chat.setSystemMessage("you should only answer using emjies and nothing else");
+
+
 const apiId = +process.env.APP_ID;
 const apiHash = process.env.APP_HASH;
 const stringSession = new StringSession(process.env.SESSION); // fill this later with the value from session.save()
@@ -17,8 +21,9 @@ const rl = readline.createInterface({
 	output: process.stdout,
 });
 
+
+
 (async () => {
-	const chat = new OllamaChat('http://127.0.0.1:11434', 'llama3.1:8b');
 	console.log("Loading interactive example...");
 	const client = new TelegramClient(stringSession, apiId, apiHash, {
 		connectionRetries: 5,
