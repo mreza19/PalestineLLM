@@ -3,6 +3,7 @@ The goal is to generate high-quality data for training a language model.
 Ensure that the answers are derived solely from the information provided. Do not provide responses based on external knowledge or assumptions.
 Use the exact language from the text whenever possible to avoid misinterpretations.
 Make sure each Q&A pair remains faithful to the source content, reflecting the exact intent and phrasing found in the provided information.
+If a time period is mentioned in the article's first line (e.g., "Time period: X - Y"), incorporate this context into your questions and answers where relevant.
 Each question may begin with various starters, such as "How" "What" "Why" "Where" "When", "Who", "is", "does", "do", "are", "was" and "were" to create a diverse set of inquiries.
 Generate a minimum of 200 question-answer pairs. ANSWERS could be very long.
 Each line is a question-answer pair and should be formatted as a JSON object in the following structure:
@@ -19,7 +20,8 @@ Here is the information:
 
 
 
-Time period:: 1918 - 1948
+
+Time period: 1918 - 1948
 ----
 
 # The mandate years and the Nakba:
