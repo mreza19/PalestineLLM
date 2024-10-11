@@ -7,3 +7,6 @@
 <https://docs.unsloth.ai/tutorials/how-to-finetune-llama-3-and-export-to-ollama>
 <https://huggingface.co/docs/autotrain/tasks/llm_finetuning>
 <https://github.com/unclecode/crawl4ai>
+<https://colab.research.google.com/drive/1tEd1FrOXWMnCU9UIvdYhs61tkxdMuKZu?usp=sharing#scrollTo=2eSvM9zX_2d3>
+<https://unsloth.ai/blog/contpretraining>
+<https://huggingface.co/docs/trl/sft_trainer#train-on-completions-only>
