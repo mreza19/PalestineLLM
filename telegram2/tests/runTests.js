@@ -1,1 +1,1 @@
-import * as ollama from "./testOllama.js";
+import * as ollama from "./testOllama.js"
