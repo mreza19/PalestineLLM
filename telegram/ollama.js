@@ -21,6 +21,11 @@ export default class OllamaChat
 		}
 	}
 
+	setHistoryMessage ( conversation )
+	{
+		this.messages = conversation;
+	}
+
 	// Add a user message to the conversation
 	addUserMessage ( content )
 	{

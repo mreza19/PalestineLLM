@@ -1,4 +1,4 @@
-import { TelegramClient } from "telegram";
+import { Api, TelegramClient } from "telegram";
 import { StringSession } from "telegram/sessions/index.js";
 import readline from "readline";
 import dotenv from "dotenv";
@@ -50,6 +50,7 @@ void async function main ()
 	// console.log(client.session.save()); // Save this string to avoid logging in again
 	// await client.sendMessage("me", { message: "Hello!" });
 
+	const allDialogs = await client.getDialogs();
 	const users = {};
 
 	async function handler ( event )
@@ -59,11 +60,16 @@ void async function main ()
 		console.log( eventt.message.message.message );
 		if ( eventt.message.message.peerId.className == "PeerUser" && eventt.message.message.message )
 		{
+			let chatHistory = await client.getMessages( eventt.message._chatPeer, {
+				limit: 20, // Fetch last 20 messages
+				reverse: false // Oldest messages first
+			});
+			chatHistory = chatHistory.map( chat => { return { role: chat.message } || ""; });
 			if ( !users[eventt.message.message.peerId.userId.value] )
 			{
-				const chat = await client.getDialogs();
-				users[eventt.message.message.peerId.userId.value] = 1;
+				users[eventt.message.message.peerId.userId.value] = chatHistory;
 			}
+			chat.setHistoryMessage( chatHistory );
 			const userMessage = eventt.message.message.message;
 			const response = await chat.chatWithModel( userMessage ); // Send the user's message to the model
 
