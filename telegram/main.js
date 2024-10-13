@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import { NewMessage } from "telegram/events/index.js";
 import { NewMessageEvent } from "telegram/events/index.js";
 import OllamaChat from "./ollama.js";
-import levelDatabase from "./db.js";
+// import levelDatabase from "./db.js";
 
 dotenv.config();
 
@@ -91,17 +91,6 @@ export default async function run() {
 			}
 
 			if(!isCommand){
-				// let chatHistory = await client.getMessages( eventt.message._chatPeer, {
-				// 	limit: 20, // Fetch last 20 messages
-				// 	reverse: false // Oldest messages first
-				// });
-				// chatHistory = chatHistory.map( chat => { return { role: chat.message } || ""; });
-				// if ( !users[eventt.message.message.peerId.userId.value] )
-				// {
-				// 	users[eventt.message.message.peerId.userId.value] = chatHistory;
-				// }
-				// chat.setHistoryMessage( chatHistory );
-
 				const response = await chats[modelChatId].chatWithModel(JSON.stringify({
 					userId,
 					isChannel: eventt.message.message.isChannel,
@@ -116,15 +105,9 @@ export default async function run() {
 						: value // return everything else unchanged
 				));  // Send the user's message to the model
 
-				// Send the response back to the user	
+				// chat.setHistoryMessage( chatHistory ); // Is this need? chat history have system messages!
 				await client.sendMessage(userId, { message: response.content });
 			}
-			chat.setHistoryMessage( chatHistory );
-			const userMessage = eventt.message.message.message;
-			const response = await chat.chatWithModel( userMessage ); // Send the user's message to the model
-
-			// Send the response back to the user
-			await client.sendMessage( eventt.message.message.peerId.userId.value, { message: response.content });
 		}
 	}
 	client.addEventHandler(handler, new NewMessage({}));
@@ -149,6 +132,19 @@ async function runCommand(userId, rawMessage) {
 		default:
 			return 'command not found. send /help'
 	}
+}
+
+function getChatHistory(){
+	// let chatHistory = await client.getMessages( eventt.message._chatPeer, {
+	// 	limit: 20, // Fetch last 20 messages
+	// 	reverse: false // Oldest messages first
+	// });
+	// chatHistory = chatHistory.map( chat => { return { role: chat.message } || ""; });
+	// if ( !users[eventt.message.message.peerId.userId.value] )
+	// {
+	// 	users[eventt.message.message.peerId.userId.value] = chatHistory;
+	// }
+	// chat.setHistoryMessage( chatHistory );
 }
 
 function help() {
