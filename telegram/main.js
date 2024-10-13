@@ -1,10 +1,11 @@
-import { TelegramClient } from "telegram";
+import { Api, TelegramClient } from "telegram";
 import { StringSession } from "telegram/sessions/index.js";
 import readline from "readline";
 import dotenv from "dotenv";
 import { NewMessage } from "telegram/events/index.js";
 import { NewMessageEvent } from "telegram/events/index.js";
 import OllamaChat from "./ollama.js";
+import levelDatabase from "./db.js";
 
 dotenv.config();
 
@@ -29,8 +30,8 @@ const rl = readline.createInterface({
 
 
 export default async function run() {
-	console.log("Loading interactive example...");
-	const client = new TelegramClient(stringSession, apiId, apiHash, {
+	console.log( "Loading ..." );
+	const client = new TelegramClient( stringSession, apiId, apiHash, {
 		connectionRetries: 5,
 	});
 	if (process.env.SESSION) {
@@ -63,7 +64,8 @@ export default async function run() {
 		await client.sendMessage("me", { message: "Hello!" });
 	}
 
-	let users = {};
+	const allDialogs = await client.getDialogs();
+	const users = {};
 
 	async function handler(event) {
 		const eventt = new NewMessageEvent(event);
@@ -89,6 +91,17 @@ export default async function run() {
 			}
 
 			if(!isCommand){
+				// let chatHistory = await client.getMessages( eventt.message._chatPeer, {
+				// 	limit: 20, // Fetch last 20 messages
+				// 	reverse: false // Oldest messages first
+				// });
+				// chatHistory = chatHistory.map( chat => { return { role: chat.message } || ""; });
+				// if ( !users[eventt.message.message.peerId.userId.value] )
+				// {
+				// 	users[eventt.message.message.peerId.userId.value] = chatHistory;
+				// }
+				// chat.setHistoryMessage( chatHistory );
+
 				const response = await chats[modelChatId].chatWithModel(JSON.stringify({
 					userId,
 					isChannel: eventt.message.message.isChannel,
@@ -106,10 +119,16 @@ export default async function run() {
 				// Send the response back to the user	
 				await client.sendMessage(userId, { message: response.content });
 			}
+			chat.setHistoryMessage( chatHistory );
+			const userMessage = eventt.message.message.message;
+			const response = await chat.chatWithModel( userMessage ); // Send the user's message to the model
+
+			// Send the response back to the user
+			await client.sendMessage( eventt.message.message.peerId.userId.value, { message: response.content });
 		}
 	}
 	client.addEventHandler(handler, new NewMessage({}));
-};
+}
 
 async function runCommand(userId, rawMessage) {
 	let command = rawMessage.split(' ')[0];

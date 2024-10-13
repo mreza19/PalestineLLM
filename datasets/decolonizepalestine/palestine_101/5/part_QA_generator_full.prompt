@@ -1,11 +1,13 @@
 Please generate a set of questions and answers based on the provided information.
-The goal is to generate high-quality data for training a language model.
-Ensure that the answers are derived solely from the information provided. Do not provide responses based on external knowledge or assumptions.
+The goal is to create high-quality data for training a language model.
+Ensure that the answers are derived solely from the information provided. Do not use external knowledge or make assumptions.
 Use the exact language from the text whenever possible to avoid misinterpretations.
-Make sure each Q&A pair remains faithful to the source content, reflecting the exact intent and phrasing found in the provided information.
-Each question may begin with various starters, such as "How" "What" "Why" "Where" "When", "Who", "is", "does", "do", "are", "was" and "were" to create a diverse set of inquiries.
-Generate a minimum of 200 question-answer pairs. ANSWERS could be very long.
-Each line is a question-answer pair and should be formatted as a JSON object in the following structure:
+Make sure each question-and-answer pair remains faithful to the source content, reflecting the exact intent and phrasing found in the provided information.
+If a specific date or time period is mentioned at the start of the article (such as "Time period," "News Date," or "Speech Date"), incorporate this context into your questions and answers where relevant.
+Where appropriate, try to ensure that the questions and answers reflect some aspect of the date or time period mentioned in the text.
+Each question may start with various forms, such as “How,” “What,” “Why,” “Where,” “When,” “Who,” “Is,” “Does,” “Do,” “Are,” “Was,” and “Were” to ensure diversity in the inquiries.
+Generate at least 200 question-answer pairs. Answers must be very long and detailed.
+Each line should represent a question-and-answer pair formatted as a JSON object in the following structure:
 
 ```json
 {"conversations": [{"role": "user","content": "QUESTION-1"},{"role": "assistant","content": "ANSWER-1"}]}
@@ -19,7 +21,8 @@ Here is the information:
 
 
 
-Palestine In Years between: 2005 - 2022
+
+Time period:: 2005 - 2022
 ----
 
 # BDS (Boycott, Disinvestment and Sanctions):
@@ -80,7 +83,7 @@ This is perhaps the most common baseless smear directed against the BDS movement
 
 Since this calls for the return of Palestinian refugees, this would mean threatening Israel’s Jewish majority. Naturally, the fact that this majority is only artificially maintained through expelling the natives is never brought up. I suppose it is an inconvenient fact to face that Israelis only have their homes because millions of Palestinians don’t have theirs.
 
-Regardless, if Israel were truly an egalitarian and democratic state, as its defenders so often insist, then it wouldn’t matter what the demographic make-up of the country is. A citizen is a citizen. However, Israel is not a democracy, but an ethnocracy built around privileging Jewish Israelis over everyone else [You can read more about this here]. This pushes Israel to instate racist laws that discriminate against Palestinians, even those it begrudgingly calls citizens. This ethnocratic logic animates much of Israel’s demographic obsessions, and gives credence to the utterly dehumanizing view that Palestinian babies are demographic threats, because they endanger an absolute Jewish majority.
+Regardless, if Israel were truly an egalitarian and democratic state, as its defenders so often insist, then it wouldn’t matter what the demographic make-up of the country is. A citizen is a citizen. However, Israel is not a democracy, but an ethnocracy built around privileging Jewish Israelis over everyone else. This pushes Israel to instate racist laws that discriminate against Palestinians, even those it begrudgingly calls citizens. This ethnocratic logic animates much of Israel’s demographic obsessions, and gives credence to the utterly dehumanizing view that Palestinian babies are demographic threats, because they endanger an absolute Jewish majority.
 
 Could you imagine any other state saying “we need to maintain a majority of X ethnic group” and instating racist laws to make it happen, and still be considered a liberal first world democracy?
 
