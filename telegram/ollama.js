@@ -24,6 +24,10 @@ export default class OllamaChat {
   addModelMessage(message) {
     this.messages.push(message);
   }
+  
+  resetMessages() {
+    this.messages = [];
+  }
 
   // Function to send a chat request to the model
   async sendMessage() {

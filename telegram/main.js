@@ -8,8 +8,10 @@ import OllamaChat from "./ollama.js";
 
 dotenv.config();
 
-const chat = new OllamaChat(process.env.HOST || 'http://127.0.0.1:11434', process.env.MODEL || 'unsloth_model');
-chat.setSystemMessage(process.env.SYSTEM_MESSAGE || "");
+const chats = {};
+chats.general = new OllamaChat(process.env.HOST || 'http://127.0.0.1:11434', process.env.MODEL || 'unsloth_model');
+chats.general.setSystemMessage(process.env.SYSTEM_MESSAGE || "");
+const debug = process.env.DEBUG;
 
 
 const apiId = +process.env.APP_ID;
@@ -23,7 +25,7 @@ const rl = readline.createInterface({
 
 
 
-(async () => {
+export default async function run() {
 	console.log("Loading interactive example...");
 	const client = new TelegramClient(stringSession, apiId, apiHash, {
 		connectionRetries: 5,
@@ -65,28 +67,54 @@ const rl = readline.createInterface({
 		console.log(eventt.message.message.peerId.className)
 		console.log(eventt.message.message.message)
 		if (eventt.message.message.peerId.className == 'PeerUser' && eventt.message.message.message) {
-			if (!users[eventt.message.message.peerId.userId.value]) {
-				let chat = await client.getDialogs();
-				users[eventt.message.message.peerId.userId.value] = 1;
+			let userId = eventt.message.message.peerId.userId.value;
+			if (!users[userId]) {
+				await client.getDialogs();
+				users[userId] = 1;
 			}
 			let message = eventt.message.message.message;
-			const response = await chat.chatWithModel(JSON.stringify({
-				userId: eventt.message.message.peerId.userId.value,
-				isChannel: eventt.message.message.isChannel,
-				isGroup: eventt.message.message.isGroup,
-				isPrivate: eventt.message.message.isPrivate,
-				msgId: eventt.message.message.id,
-				className: eventt.message.message.peerId.className,
-				message
-			}, (key, value) =>
-				typeof value === 'bigint'
-					? value.toString()
-					: value // return everything else unchanged
-			));  // Send the user's message to the model
+			let isCommand = false;
 
-			// Send the response back to the user	
-			await client.sendMessage(eventt.message.message.peerId.userId.value, { message: response.content });
+			let modelChatId = process.env.SEPERATE_MODEL_CHATS == 'true' ? userId : 'general';
+
+			if(debug && message.startsWith('/')){
+				let res = await runCommand(modelChatId, message);
+				await client.sendMessage(userId, { message: res });
+			}
+
+			if(!isCommand){
+				const response = await chats[modelChatId].chatWithModel(JSON.stringify({
+					userId,
+					isChannel: eventt.message.message.isChannel,
+					isGroup: eventt.message.message.isGroup,
+					isPrivate: eventt.message.message.isPrivate,
+					msgId: eventt.message.message.id,
+					className: eventt.message.message.peerId.className,
+					message
+				}, (key, value) =>
+					typeof value === 'bigint'
+						? value.toString()
+						: value // return everything else unchanged
+				));  // Send the user's message to the model
+
+				// Send the response back to the user	
+				await client.sendMessage(userId, { message: response.content });
+			}
 		}
 	}
 	client.addEventHandler(handler, new NewMessage({}));
-})();
+};
+
+async function runCommand(userId, rawMessage) {
+	let command = rawMessage.split(' ')[0];
+	let textMessage = rawMessage.replace(command + ' ', '');
+	switch(command){
+		case '/setPrompt':
+			await setPrompt(userId, textMessage);
+	}
+	return 'WWWHHAATT??';
+}
+
+async function setPrompt(userId, prompt) {
+	chats[userId].setSystemMessage(prompt);	
+}
