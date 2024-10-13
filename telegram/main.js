@@ -16,6 +16,9 @@ const debug = process.env.DEBUG;
 
 const apiId = +process.env.APP_ID;
 const apiHash = process.env.APP_HASH;
+if(!apiId){
+	throw new Error('API_ID not found!');
+}
 const stringSession = new StringSession(process.env.SESSION); // fill this later with the value from session.save()
 
 const rl = readline.createInterface({
@@ -70,6 +73,8 @@ export default async function run() {
 			let userId = eventt.message.message.peerId.userId.value;
 			if (!users[userId]) {
 				await client.getDialogs();
+				chats[userId] = new OllamaChat(process.env.HOST || 'http://127.0.0.1:11434', process.env.MODEL || 'unsloth_model');
+				chats[userId].setSystemMessage(process.env.SYSTEM_MESSAGE || "");
 				users[userId] = 1;
 			}
 			let message = eventt.message.message.message;
@@ -78,8 +83,9 @@ export default async function run() {
 			let modelChatId = process.env.SEPERATE_MODEL_CHATS == 'true' ? userId : 'general';
 
 			if(debug && message.startsWith('/')){
+				isCommand = true;
 				let res = await runCommand(modelChatId, message);
-				await client.sendMessage(userId, { message: res });
+				await client.sendMessage(userId, { message: res || 'not returned' });
 			}
 
 			if(!isCommand){
@@ -110,11 +116,61 @@ async function runCommand(userId, rawMessage) {
 	let textMessage = rawMessage.replace(command + ' ', '');
 	switch(command){
 		case '/setPrompt':
-			await setPrompt(userId, textMessage);
+			return setPrompt(userId, textMessage);
+		case '/reset':
+			return resetMessages(userId, textMessage);
+		case '/help':
+			return help();
+		case '/getModels':
+			return getModels(userId);
+		case '/setModel':
+			return setModel(userId, textMessage);
+		case '/getPrompt':
+			return getPrompt(userId);
+		default:
+			return 'command not found. send /help'
 	}
-	return 'WWWHHAATT??';
 }
 
+function help() {
+	return `
+	/reset
+	to clear all messagese history and start again
+
+	/setPrompt [prompt]
+	to set new prompt + reset
+
+	/getPrompt
+	to get prompt
+
+	/getModels
+	to get models list
+
+	/setModel [modelName]
+	to set model
+	`;
+}
+
+async function resetMessages(userId) {
+	chats[userId].resetMessages();
+	return 'OK';
+}
 async function setPrompt(userId, prompt) {
+	chats[userId].resetMessages();
 	chats[userId].setSystemMessage(prompt);	
+	return 'OK';
+}
+async function getModels(userId) {
+	let models = await chats[userId].getModels();	
+	if(models){
+		return JSON.stringify(models, null, 4);
+	}
+	return 'null';
+}
+async function setModel(userId, modelTxt) {
+	chats[userId].setModel(modelTxt);	
+	return 'OK';
+}
+async function getPrompt(userId) {
+	return chats[userId].getSystemMessage();	
 }

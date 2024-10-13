@@ -15,6 +15,14 @@ export default class OllamaChat {
     }
   }
 
+  getSystemMessage() {
+    if (this.messages.length > 0 && this.messages[0].role === 'system') {
+      return this.messages[0].content;
+    } else {
+      return 'null';
+    }
+  }
+
   // Add a user message to the conversation
   addUserMessage(content) {
     this.messages.push({ role: 'user', content });
@@ -26,7 +34,15 @@ export default class OllamaChat {
   }
   
   resetMessages() {
-    this.messages = [];
+    this.messages = [this.messages[0]];
+  }
+
+  getModels(){
+    return this.ollama.list();
+  }
+
+  setModel(modelTxt){
+    this.model = modelTxt;
   }
 
   // Function to send a chat request to the model
