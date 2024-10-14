@@ -21,44 +21,47 @@ export default class OllamaChat
 		}
 	}
 
-  getSystemMessage() {
-    if (this.messages.length > 0 && this.messages[0].role === 'system') {
-      return this.messages[0].content;
-    } else {
-      return 'null';
-    }
-  }
-
-  // Add a user message to the conversation
-  addUserMessage(content) {
-    this.messages.push({ role: 'user', content });
-  }
-
-  // Add the model's response to the conversation
-  addModelMessage(message) {
-    this.messages.push(message);
-  }
-  
-  resetMessages() {
-    this.messages = [this.messages[0]];
-  }
-
-  getModels(){
-    return this.ollama.list();
-  }
-
-  setModel(modelTxt){
-    this.model = modelTxt;
-  }
-	setHistoryMessage ( conversation )
+	getSystemMessage ()
 	{
-		this.messages = conversation;
+		if ( this.messages.length > 0 && this.messages[0].role === "system" )
+		{
+			return this.messages[0].content;
+		}
+		else
+		{
+			return "null";
+		}
+	}
+
+	// Add a user message to the conversation
+	addUserMessage ( content )
+	{
+		this.messages.push({ role: "user", content });
 	}
 
 	// Add the model's response to the conversation
 	addModelMessage ( message )
 	{
 		this.messages.push( message );
+	}
+
+	resetMessages ()
+	{
+		this.messages = [this.messages[0]]; // Keep the system message
+	}
+
+	getModels ()
+	{
+		return this.ollama.list();
+	}
+
+	setModel ( modelTxt )
+	{
+		this.model = modelTxt;
+	}
+	setHistoryMessage ( conversation )
+	{
+		this.messages = conversation;
 	}
 
 	// Function to send a chat request to the model
