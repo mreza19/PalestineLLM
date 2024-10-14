@@ -102,22 +102,12 @@ export default async function run ()
 
 			if ( !isCommand )
 			{
-				const response = await chats[modelChatId].chatWithModel( JSON.stringify({
+				const prompt = promptGenerator({
 					userId,
-					isChannel: eventt.message.message.isChannel,
-					isGroup: eventt.message.message.isGroup,
-					isPrivate: eventt.message.message.isPrivate,
-					msgId: eventt.message.message.id,
-					className: eventt.message.message.peerId.className,
+					...eventt,
 					message
-				}, ( key, value ) =>
-				{
-					return typeof value === "bigint"
-						? value.toString()
-						: value;
-				} // return everything else unchanged
-				) ); // Send the user's message to the model
-
+				});
+				const response = await chats[modelChatId].chatWithModel( message );
 				// chat.setHistoryMessage( chatHistory ); // Is this need? chat history have system messages!
 				await client.sendMessage( userId, { message: response.content });
 			}
@@ -132,8 +122,8 @@ function runCommand ( userId, rawMessage )
 	const textMessage = rawMessage.replace( `${command } `, "" );
 	switch ( command )
 	{
-	case "/setPrompt":
-		return setPrompt( userId, textMessage );
+	case "/setSystemMessage":
+		return setSystemMessage( userId, textMessage );
 	case "/reset":
 		return resetMessages( userId, textMessage );
 	case "/help":
@@ -142,8 +132,8 @@ function runCommand ( userId, rawMessage )
 		return getModels( userId );
 	case "/setModel":
 		return setModel( userId, textMessage );
-	case "/getPrompt":
-		return getPrompt( userId );
+	case "/getSystemMessage":
+		return getSystemMessage( userId );
 	default:
 		return "command not found. send /help";
 	}
@@ -169,11 +159,11 @@ function help ()
 	/reset
 	to clear all messagese history and start again
 
-	/setPrompt [prompt]
-	to set new prompt + reset
+	/setSystemMessage [system message]
+	to set new system message + reset
 
-	/getPrompt
-	to get prompt
+	/getSystemMessage
+	to get system message
 
 	/getModels
 	to get models list
@@ -188,12 +178,19 @@ function resetMessages ( userId )
 	chats[userId].resetMessages();
 	return "OK";
 }
-function setPrompt ( userId, prompt )
+
+function getSystemMessage ( userId )
+{
+	return chats[userId].getSystemMessage();
+}
+
+function setSystemMessage ( userId, systemMessage )
 {
 	chats[userId].resetMessages();
-	chats[userId].setSystemMessage( prompt );
+	chats[userId].setSystemMessage( systemMessage );
 	return "OK";
 }
+
 async function getModels ( userId )
 {
 	const models = await chats[userId].getModels();
@@ -203,12 +200,38 @@ async function getModels ( userId )
 	}
 	return "null";
 }
+
 function setModel ( userId, modelTxt )
 {
 	chats[userId].setModel( modelTxt );
 	return "OK";
 }
-function getPrompt ( userId )
+
+function promptGenerator ( data )
 {
-	return chats[userId].getSystemMessage();
+	if ( process.env.PROMPT_GENERATOR == "true" )
+	{
+		return JSON.stringify(
+			{
+				userId: data.userId,
+				isChannel: data.eventt.message.message.isChannel,
+				isGroup: data.eventt.message.message.isGroup,
+				isPrivate: data.eventt.message.message.isPrivate,
+				msgId: data.eventt.message.message.id,
+				className: data.eventt.message.message.peerId.className,
+				message: data.message
+			},
+			( key, value ) =>
+			{
+				return typeof value === "bigint"
+					? value.toString()
+					: value;
+			} // return everything else unchanged
+		);
+	}
+	else
+	{
+		return data.message;
+	}
 }
+

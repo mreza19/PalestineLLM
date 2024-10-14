@@ -4,7 +4,7 @@
 	"type": "module",
 	"main": "main.js",
 	"scripts": {
-		"start": "node .",
+		"start": "node run.js",
 		"test": "node tests/runTests.js"
 	},
 	"author": "",
